@@ -128,3 +128,4 @@ dmypy.json
 # Pyre type checker
 .pyre/
 dataset/189.mp4
+dataset/id.png
