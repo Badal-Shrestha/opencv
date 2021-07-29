@@ -1,0 +1,111 @@
+<!doctype html>
+
+<head>
+    <style>
+    /* CSS comes here */
+    img{
+         width: 65%;
+         height: 70%;
+         object-fit: contain;
+      }
+    #up-img{
+         width:250px;
+         height: 250px; 
+         display: none;
+    }
+    #video {
+        border: 1px solid black;
+        width: 320px;
+        height: 240px;
+    }
+
+    #photo {
+        border: 1px solid black;
+        width: 320px;
+        height: 240px;
+    }
+
+    #canvas {
+        display: none;
+    }
+
+    .camera {
+        width: 340px;
+        display: inline-block;
+    }
+
+    .output {
+        width: 340px;
+        display: inline-block;
+    }
+
+    #startbutton {
+        display: block;
+        position: relative;
+        margin-left: auto;
+        margin-right: auto;
+        bottom: 36px;
+        padding: 5px;
+        background-color: #6a67ce;
+        border: 1px solid rgba(255, 255, 255, 0.7);
+        font-size: 14px;
+        color: rgba(255, 255, 255, 1.0);
+        cursor: pointer;
+    }
+
+    .contentarea {
+        font-size: 16px;
+        font-family: Arial;
+        text-align: center;
+    }
+    </style>
+    <title>Image Similarity</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
+    <script type="text/javascript" src="{{ url_for('static', filename='script.js') }}"></script>
+</head>
+
+<body>
+  
+    <div class="contentarea">
+        <h1>
+            Using Javascript to capture Photo
+        </h1>
+        
+        <div class="camera">
+            <form id= "upload-image" method="POST" enctype="multipart/form-data">
+
+                <div class="form-group">
+                   <input type='file' name='file' >
+                </div>
+             
+        
+             </form>
+            <video id="video">Video stream not available.</video>
+        </div>
+        <div><button id="startbutton">Take photo</button></div>
+        <div><button id="anotherbutton" onclick="startup()">Take another photo</button></div>
+        <canvas id="canvas"></canvas>
+        <div class="row justify-content-center align-items-center h-100">
+            <img id="up-img" alt=""/>
+            <div class="output">
+                <img id="photo" alt="The screen capture will appear in this box.">
+            </div>
+            <div class="col col-sm-6 col-md-6 col-lg-4 col-xl-3">
+   
+              
+               <div class="col"><button id= "upload-btn"   class="col-6 btn btn-primary btn-sm float-right"
+                  >Check Similarity</button></div>
+            </div>
+         </div>
+         <p id="result"></p>
+        <button id="stop-button">Stop</button>
+    </div>
+
+    
+</body>
+
+</html>
