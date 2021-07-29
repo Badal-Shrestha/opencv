@@ -129,3 +129,4 @@ dmypy.json
 .pyre/
 dataset/189.mp4
 dataset/id.png
+ocr_try.py
