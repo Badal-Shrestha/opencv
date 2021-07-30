@@ -75,31 +75,29 @@ function startup() {
     });
     
     $("#upload-btn").click(function(){
-        var form_data = new FormData($('#upload-image')[0])
-        var upload_img = document.getElementById("up-img").src
-        var capture_selfi = photo.src
+        var form_data = new FormData($('#upload-image')[0]) // Creating form data
+        var capture_selfi = photo.src // Captured img
 
-        // form_data.append("img1",upload_img)
-        form_data.append("img2",capture_selfi)
+        form_data.append("img2",capture_selfi) // Appending img on form data
         $.ajax({
             type: "POST",
-            url: "/similarity",
-            // url: "{{ url_for('similarity') }}",
+            url: "/similarity", // Flask url for similarity calulation
 
             data : form_data,
-            dataType : "text",
+            dataType : "json",
             contentType: false,
             cache : false,
             processData: false,
             beforeSend:function(){
                 console.log("Send")
               },
-              complete:function(data){
+            complete:function(data){ // Recive similarity score from the flask server
                 console.log(data.responseText)
                 response = data.responseText
-                console.log(typeof(respnse))
-                response = JSON.parse(response);
-                var result = document.getElementById('result')
+                console.log(typeof(response))
+                response = JSON.parse(response); // Parsing resonse
+                var result = document.getElementById('result') 
+                // displaying similarity score on pragraph Tag
                 result.innerText = response['score'][1]+ " score: " + response['score'][0] 
                
 

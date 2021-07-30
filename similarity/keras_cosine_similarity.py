@@ -10,7 +10,7 @@ img2 = cv2.imread("dataset/obama2.jpg")
 
 
 # Model for face detection
-modelFile = "../models/dnn/res10_300x300_ssd_iter_140000.caffemodel" 
+modelFile = "../models/dnn/res10_300x300_ssd_iter_140000.caffemodel" # Model path
 configFile = "../models/dnn/deploy.prototxt.txt"
 net = cv2.dnn.readNetFromCaffe(configFile, modelFile)
 
