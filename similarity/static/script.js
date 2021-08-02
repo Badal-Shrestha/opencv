@@ -79,6 +79,7 @@ function startup() {
         var capture_selfi = photo.src // Captured img
 
         form_data.append("img2",capture_selfi) // Appending img on form data
+        
         $.ajax({
             type: "POST",
             url: "/similarity", // Flask url for similarity calulation

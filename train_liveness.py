@@ -40,6 +40,7 @@ for root, files, images in os.walk(dataset):
         img = cv2.imread(img_path)
         img = cv2.resize(img,(image_size,image_size))
         lbph_feature = lbp_histogram(img)
+        
         features.append(lbph_feature)
 
         if class_name[-1] =="fake": #set label to 0 if class is fake and 1 if class is real

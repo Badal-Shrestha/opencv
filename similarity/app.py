@@ -39,9 +39,13 @@ def similarity():
         for upload in request.files.getlist("file"):
             print("{} is the file name".format(upload.filename))
             img_array = np.array(bytearray(upload.read()), dtype=np.uint8)
+
             img1 = cv2.imdecode(img_array, -1)
+
         img2 = request.form['img2'] # reading img 2
+
         img2 = data_uri_to_cv2_img(img2) 
+        
         score = check_similarity(img1,img2) # Return similarity score
         print(score)
         output = "Matched"  if score >0.6 else "Not Matched" # Marched if similarity socre is greater than 0.6 else Not matched

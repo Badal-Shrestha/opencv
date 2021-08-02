@@ -7,6 +7,7 @@ modelFile = "models/dnn/res10_300x300_ssd_iter_140000.caffemodel"
 configFile = "models/dnn/deploy.prototxt.txt"
 net = cv2.dnn.readNetFromCaffe(configFile, modelFile)
 classes = ['fake','real'] # Classification Category
+
 img  = cv2.imread("dataset/obama2.jpg") # image to classify
 
 # loading livness model 
@@ -50,15 +51,19 @@ def lbp_histogram(color_image):
 
 
 bounding_box = detect_face(img) #detecting face 
+
 for box in bounding_box:
     (x1, y1, x2, y2) = box.astype("int")
-    crop_face = img[y1:y2,x1:x2] # Croping face
+    crop_face = img[y1:y2,x1:x2] # Croping 
+    
     crop_face = cv2.resize(crop_face,(160,160))
 
     lbp_feature = lbp_histogram(crop_face) # calulating image lbp image feature
     w,h,_ = crop_face.shape
+    
     features = lbp_feature.reshape((1,w*h))  # resizing image to match the model  input format
     result = liveness_model.predict_proba(features) # prediction class  reutrn accuracy of class
+   
     print(result)
 
     index = np.argmax(result[0]) # index of highest accuracy value i.e 1 [[0.40014934 0.59985066]]

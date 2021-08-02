@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 from tensorflow.keras.models import load_model
 from sklearn.metrics.pairwise import cosine_similarity, cosine_distances
-
+from keras_facenet import FaceNet
 
 
 img1 = cv2.imread("dataset/obama1.jpg") # read image
@@ -10,12 +10,11 @@ img2 = cv2.imread("dataset/obama2.jpg")
 
 
 # Model for face detection
-modelFile = "../models/dnn/res10_300x300_ssd_iter_140000.caffemodel" # Model path
-configFile = "../models/dnn/deploy.prototxt.txt"
+modelFile = "models/dnn/res10_300x300_ssd_iter_140000.caffemodel" 
+configFile = "models/dnn/deploy.prototxt.txt"
 net = cv2.dnn.readNetFromCaffe(configFile, modelFile)
-
 # Facenet model to extract the facial feature from the image 
-model = load_model('../models/facenet_keras.h5') # loading model
+model = FaceNet()
 # model.summary() # Display Architecture of the model
 
 def detect_face(img, threshold=0.85):
@@ -54,29 +53,19 @@ def get_img_feature(img):
         (x1, y1, x2, y2) = box.astype("int")
         crop_face = img[y1:y2,x1:x2]
         crop_face = cv2.resize(crop_face,(160,160))
-        crop_face = prewhiten(crop_face)
-        embeding = model.predict(np.expand_dims(crop_face,axis=0))
+        # crop_face = prewhiten(crop_face)
+        embeding = model.embeddings(np.expand_dims(crop_face,axis=0))
     return embeding
 
-def detect_livness(img):
-    pass
-
-def check_similarity(img1,img2):
-    emb1 = get_img_feature(img1)
-    emb2 = get_img_feature(img2)
-
-    similarity_score = cosine_similarity(emb1,emb2)
-    return similarity_score[0][0]
 
 
-if __name__ == "__main__":
 
-    emb1 = get_img_feature(img1)
-    emb2 = get_img_feature(img2)
+emb1 = get_img_feature(img1)
+emb2 = get_img_feature(img2)
 
-    similarity_score = cosine_similarity(emb1,emb2) # Comapring image using Consine Similarity algorithm
+similarity_score = cosine_similarity(emb1,emb2) # Comapring image using Consine Similarity algorithm
 
-    if similarity_score >= 0.6:
-        print("*********** Matched :",similarity_score, " ********************")
-    else:
-        print("**************** Not matched **************")
+if similarity_score >= 0.6:
+    print("*********** Matched :",similarity_score, " ********************")
+else:
+    print("**************** Not matched **************",similarity_score)
