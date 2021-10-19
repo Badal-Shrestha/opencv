@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=h1, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/blazeface"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='video.js') }}"></script>
+    <style>
+        #video {
+            -webkit-transform: scaleX(-1);
+            transform: scaleX(-1);
+            display: none;
+        }
+        #canvas {
+            -webkit-transform: scaleX(-1);
+            transform: scaleX(-1);
+        }
+        #direction{
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Liveness Detectionas
+
+    </h1>
+    <p id="direction"></p>
+    <video  id="video"  ></video>
+    <canvas id="canvas" ></canvas>
+</body>
+</html>

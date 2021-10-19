@@ -129,4 +129,6 @@ dmypy.json
 .pyre/
 dataset/189.mp4
 dataset/id.png
+dataset/*
 ocr_try.py
+spoof_detection_KYC_verification-main.zip

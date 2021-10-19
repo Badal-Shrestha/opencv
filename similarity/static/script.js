@@ -99,6 +99,14 @@ function startup() {
                 response = JSON.parse(response); // Parsing resonse
                 var result = document.getElementById('result') 
                 // displaying similarity score on pragraph Tag
+                success = response['sucess']
+                cid = response['cid']
+                if (success){
+                    window.location ="/userCIFUpdate/" + cid
+                }else{
+                    window.location = "/login"
+                }
+
                 result.innerText = response['score'][1]+ " score: " + response['score'][0] 
                
 

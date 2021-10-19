@@ -1,14 +1,15 @@
 import cv2
 import numpy as np
+import time
 from tensorflow.keras.models import load_model
 from sklearn.metrics.pairwise import cosine_similarity, cosine_distances
+import matplotlib.pyplot as plt
 
+start_time = time.time()
+img1 = cv2.imread("dataset/citizen.jpg") # read image
+img2 = cv2.imread("dataset/obama1.jpg")
 
-
-img1 = cv2.imread("dataset/obama1.jpg") # read image
-img2 = cv2.imread("dataset/obama2.jpg")
-
-
+matched_data =[]
 # Model for face detection
 modelFile = "models/dnn/res10_300x300_ssd_iter_140000.caffemodel" 
 configFile = "models/dnn/deploy.prototxt.txt"
@@ -55,6 +56,7 @@ def get_img_feature(img):
         crop_face = img[y1:y2,x1:x2]
         crop_face = cv2.resize(crop_face,(160,160))
         crop_face = prewhiten(crop_face)
+        matched_data.append(cv2.rectangle(img,(x1,y1),(x2,y2),(0,255,0),1))
         embeding = model.predict(np.expand_dims(crop_face,axis=0))
     return embeding
 
@@ -65,8 +67,18 @@ emb1 = get_img_feature(img1)
 emb2 = get_img_feature(img2)
 
 similarity_score = cosine_similarity(emb1,emb2) # Comapring image using Consine Similarity algorithm
+print(" End time::  ",time.time()-start_time)
 
+score = float('{:.2f}'.format(similarity_score[0][0])) 
 if similarity_score >= 0.6:
-    print("*********** Matched :",similarity_score, " ********************")
+    title = f"Matched :{score*100}%"
 else:
-    print("**************** Not matched **************")
+    title = f"Matched :{score*100}%"
+
+fig = plt.figure(figsize=(150,150))
+fig.suptitle(title, fontsize=20)
+for i in range(0,len(matched_data)):
+    fig.add_subplot(1, 2, i+1)
+    plt.imshow(matched_data[i])
+plt.show()
+
